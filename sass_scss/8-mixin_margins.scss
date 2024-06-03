@@ -1,0 +1,17 @@
+@mixin firstMixin {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+@mixin secondMixin {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+body {
+    @include firstMixin;
+}
+
+div {
+    @include secondMixin;
+}
