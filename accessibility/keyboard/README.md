@@ -1,1 +1,0 @@
-Accessibility is awesome!
