@@ -1,0 +1,33 @@
+:root {
+    --reused-color: #E0003C;
+}
+
+.btn-primary {
+    background-color: var(--reused-color);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #BC1340;
+}
+
+.btn-outline-primary {
+    color: var(--reused-color);
+    border-color: var(--reused-color);
+}
+
+a,
+a:hover,
+a:focus {
+    color: var(--reused-color) !important;
+}
+
+.card {
+    border-color: var(--reused-color);
+    border-radius: 1rem;
+}
+
+.text-muted {
+    color: #8C8C8C;
+}
