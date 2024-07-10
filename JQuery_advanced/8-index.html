@@ -5,6 +5,17 @@
     <meta charset="utf-8" />
     <title>Task 1</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        #pagination li {
+            display: inline;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        #pagination .current {
+            font-weight: bold;
+        }
+    </style>
     <script>
         $(document).ready(function() {
             function createSearchForm() {
@@ -20,12 +31,11 @@
                 form.on('submit', function(event) {
                     event.preventDefault();
                     const searchInput = input.val();
-                    console.log("Form submitted with input: ", searchInput);
                     queryWikipedia(searchInput, 0);
                 });
             }
+
             function addNewArticle(id, title, snippet) {
-                console.log("Adding new article", id, title);
                 const list = $('<li>');
                 const pElements = $('<p>').append(
                     $('<span>').text(id + ' - '),
@@ -35,13 +45,14 @@
                 list.append(pElements, snippetParagraph);
                 $('ul').append(list);
             }
+
             function queryWikipedia(search, offset = 0) {
                 const url = "https://en.wikipedia.org/w/api.php";
-                // api stuff from documentation
                 const data = {
                     action: 'query',
                     list: 'search',
                     srsearch: search,
+                    sroffset: offset,
                     format: 'json',
                     origin: '*'
                 };
@@ -57,14 +68,15 @@
                         results.forEach(result => {
                             addNewArticle(result.pageid, result.title, result.snippet);
                         });
-                        const totalhits = response.query.searchinfo.numberofhits;
-                        buildPagination(totahits, 10, offset);
+                        const totalhits = response.query.searchinfo.totalhits;
+                        buildPagination(totalhits, 10, offset);
                     },
                     error: function() {
-                        console.error("errrror");
+                        console.error("An error occurred while fetching data from Wikipedia.");
                     }
                 });
             }
+
             function buildPagination(numberOfItems, itemsPerPage, currentOffset) {
                 $('#pagination').empty();
                 const pages = Math.ceil(numberOfItems / itemsPerPage);
