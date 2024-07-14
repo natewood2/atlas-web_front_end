@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Cookie Manager</h1>
+    <label for="firstname">First Name</label>
+    <input type="text" id="firstname" name="firstname">
+    <label for="email">Email</label>
+    <input type="text" id="email" name="email">
+    <button onclick="setCookies()">Log me in</button>
+    <button onclick="showCookies()">Show the cookies</button>
+    <script>
+        function setCookies() {
+            const firstname = document.getElementById('firstname').value;
+            const email = document.getElementById('email').value;
+            document.cookie = `firstname=${firstname}; path=/`;
+            document.cookie = `email=${email}; path=/`;
+        }
+
+        function showCookies() {
+            const p = document.createElement('p');
+            p.textContent = `Cookies: ${document.cookie}`;
+            document.body.appendChild(p);
+        }
+    </script>
+</body>
+</html>
