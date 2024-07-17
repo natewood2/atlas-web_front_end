@@ -13,6 +13,7 @@
     <input type="text" id="email" name="email">
     <button onclick="setCookies()">Log me in</button>
     <button onclick="showCookies()">Show the cookies</button>
+    <p id="cookiePTag"></p>
     <script>
         function setCookies() {
             const firstname = document.getElementById('firstname').value;
@@ -24,10 +25,22 @@
             document.cookie = `email=${email}; ${expires};`;
         }
 
+        function getCookie(name) {
+            let cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return '';
+        }
+
         function showCookies() {
-            const p = document.createElement('p');
-            p.textContent = `Cookies: ${document.cookie}`;
-            document.body.appendChild(p);
+            const email = getCookie('email');
+            const firstname = getCookie('firstname');
+            const p = document.getElementById('cookiePTag');
+            p.textContent = `Email: ${email} - Firstname: ${firstname}`;
         }
     </script>
 </body>
