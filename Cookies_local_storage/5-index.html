@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index 3</title>
+</head>
+<body>
+    <div id="loginForm" style="display: none;">
+        <h2>Login to the website</h2>
+        <input type="text" id="firstname" placeholder="Firstname">
+        <input type="email" id="email" placeholder="Email">
+        <button onclick="setCookiesAndShowWelcomeMessage()">Log me in</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+    <script>
+        function setCookiesAndShowWelcomeMessage() {
+            const firstname = document.getElementById('firstname').value;
+            const email = document.getElementById('email').value;
+            const expires = 10;
+            Cookies.set('firstname', firstname, { expires: expires });
+            Cookies.set('email', email, { expires: expires });
+            showWelcomeMessageOrForm();
+        }
+    
+        function showForm() {
+            const welcomeMessage = document.querySelector('h1');
+            if (welcomeMessage) {
+                welcomeMessage.remove();
+            }
+            document.getElementById('loginForm').style.display = 'block';
+        }
+    
+        function hideForm() {
+            document.getElementById("loginForm").style.display = "none";
+        }
+    
+        function deleteCookiesAndShowForm() {
+            Cookies.remove('firstname');
+            Cookies.remove('email');
+            showForm();
+        }
+    
+        function showWelcomeMessageOrForm() {
+            const firstname = Cookies.get('firstname');
+            const email = Cookies.get('email');
+    
+            if (firstname && email) {
+                hideForm();
+                document.body.innerHTML = `
+                    <h1>Welcome ${firstname} 
+                        <span class="logout-link" onclick="deleteCookiesAndShowForm()">(logout)</span>
+                    </h1>`;
+            } else {
+                showForm();
+            }
+        }
+
+        window.onload = showWelcomeMessageOrForm;
+    </script>
+</body>
+</html>
